@@ -1,0 +1,77 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Giriş Yap</h1>
+      <p>Hesabınıza giriş yapın</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="email">E-posta</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="ornek@email.com"
+          [class.error]="email?.invalid && email?.touched"
+        />
+        @if (email?.invalid && email?.touched) {
+          <div class="error-message">
+            @if (email?.errors?.['required']) {
+              <span>E-posta adresi gereklidir</span>
+            }
+            @if (email?.errors?.['email']) {
+              <span>Geçerli bir e-posta adresi girin</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Şifre</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="••••••••"
+          [class.error]="password?.invalid && password?.touched"
+        />
+        @if (password?.invalid && password?.touched) {
+          <div class="error-message">
+            @if (password?.errors?.['required']) {
+              <span>Şifre gereklidir</span>
+            }
+            @if (password?.errors?.['minlength']) {
+              <span>Şifre en az 6 karakter olmalıdır</span>
+            }
+          </div>
+        }
+      </div>
+
+      @if (errorMessage) {
+        <div class="alert alert-error">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        class="btn-login"
+        [disabled]="isLoading"
+      >
+        @if (isLoading) {
+          <span class="spinner"></span>
+          <span>Giriş yapılıyor...</span>
+        } @else {
+          <span>Giriş Yap</span>
+        }
+      </button>
+
+      <div class="form-footer">
+        <a href="#" class="link">Şifremi unuttum</a>
+        <span class="separator">•</span>
+        <a href="#" class="link">Hesap oluştur</a>
+      </div>
+    </form>
+  </div>
+</div>
